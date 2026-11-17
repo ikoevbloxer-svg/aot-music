@@ -34,23 +34,23 @@ public final class MusicCommands {
             return 0;
         }
         MusicController.play(src.getServer(), track);
-        src.sendFeedback(Text.literal("♪ Играет для всех: " + track.title()), true);
+        src.sendFeedback(() -> Text.literal("♪ Играет для всех: " + track.title()), true);
         return 1;
     }
 
     private static int list(ServerCommandSource src) {
-        src.sendFeedback(Text.literal("Командные треки:"), false);
+        src.sendFeedback(() -> Text.literal("Командные треки:"), false);
         for (String id : Tracks.commandIds()) {
             Track t = Tracks.byId(id);
             if (t == null) continue;
-            src.sendFeedback(Text.literal(" • " + id + " — " + t.title()), false);
+            src.sendFeedback(() -> Text.literal(" • " + id + " — " + t.title()), false);
         }
         return 1;
     }
 
     private static int stop(ServerCommandSource src) {
         if (MusicController.stop(src.getServer())) {
-            src.sendFeedback(Text.literal("♪ Музыка остановлена. Фон вернётся по обычному расписанию."), true);
+            src.sendFeedback(() -> Text.literal("♪ Музыка остановлена. Фон вернётся по обычному расписанию."), true);
             return 1;
         }
         src.sendError(Text.literal("Сейчас ничего не играет"));
