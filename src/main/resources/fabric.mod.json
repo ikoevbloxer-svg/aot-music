@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "aotmusic",
+  "version": "1.0.0",
+  "name": "AoT Music",
+  "description": "Саундтреки Attack on Titan: фоновая музыка с паузами, как в ванили, и команды для операторов.",
+  "authors": [],
+  "license": "All-Rights-Reserved",
+  "environment": "*",
+  "entrypoints": {
+    "main": ["com.aotmusic.AotMusic"],
+    "client": ["com.aotmusic.client.AotMusicClient"]
+  },
+  "depends": {
+    "fabricloader": ">=0.14.22",
+    "minecraft": "~1.20.1",
+    "java": ">=17",
+    "fabric-api": "*"
+  }
+}

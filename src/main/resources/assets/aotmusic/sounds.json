@@ -1,0 +1,82 @@
+{
+  "call_your_name": {
+    "sounds": [
+      {
+        "name": "aotmusic:call_your_name",
+        "stream": true
+      }
+    ]
+  },
+  "aots3_pf2": {
+    "sounds": [
+      {
+        "name": "aotmusic:aots3_pf2",
+        "stream": true
+      }
+    ]
+  },
+  "eye_water": {
+    "sounds": [
+      {
+        "name": "aotmusic:eye_water",
+        "stream": true
+      }
+    ]
+  },
+  "apple_seed_instrumental": {
+    "sounds": [
+      {
+        "name": "aotmusic:apple_seed_instrumental",
+        "stream": true
+      }
+    ]
+  },
+  "t_k_0n_t_tn": {
+    "sounds": [
+      {
+        "name": "aotmusic:t_k_0n_t_tn",
+        "stream": true
+      }
+    ]
+  },
+  "apetitan": {
+    "sounds": [
+      {
+        "name": "aotmusic:apetitan",
+        "stream": true
+      }
+    ]
+  },
+  "before_lights_out": {
+    "sounds": [
+      {
+        "name": "aotmusic:before_lights_out",
+        "stream": true
+      }
+    ]
+  },
+  "baukl_tze": {
+    "sounds": [
+      {
+        "name": "aotmusic:baukl_tze",
+        "stream": true
+      }
+    ]
+  },
+  "you_see_biggirl": {
+    "sounds": [
+      {
+        "name": "aotmusic:you_see_biggirl",
+        "stream": true
+      }
+    ]
+  },
+  "apple_seed_bertholdt": {
+    "sounds": [
+      {
+        "name": "aotmusic:apple_seed_bertholdt",
+        "stream": true
+      }
+    ]
+  }
+}
