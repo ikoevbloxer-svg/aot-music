@@ -12,7 +12,7 @@
     "client": ["com.aotmusic.client.AotMusicClient"]
   },
   "depends": {
-    "fabricloader": ">=0.16.5",
+    "fabricloader": ">=0.16.7",
     "minecraft": "~1.21.1",
     "java": ">=21",
     "fabric-api": "*"
