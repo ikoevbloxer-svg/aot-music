@@ -11,7 +11,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.sound.SoundInstance;
-import net.minecraft.client.sound.SimpleSoundInstance;
+import net.minecraft.client.sound.PositionedSoundInstance;
 import net.minecraft.registry.Registries;
 import net.minecraft.sound.SoundEvent;
 
@@ -56,7 +56,7 @@ public class AotMusicClient implements ClientModInitializer {
         stopTrack(mc);
         SoundEvent event = Registries.SOUND_EVENT.get(track.soundId());
         if (event == null) return;
-        playing = SimpleSoundInstance.forMusic(event);
+        playing = PositionedSoundInstance.music(event);
         mc.getSoundManager().play(playing);
         toastTitle = track.title();
         toastUntil = clientTick + TOAST_TICKS;
