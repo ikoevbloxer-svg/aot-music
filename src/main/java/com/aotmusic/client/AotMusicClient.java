@@ -10,6 +10,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.font.TextRenderer;
+import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.client.sound.SoundInstance;
 import net.minecraft.client.sound.PositionedSoundInstance;
 import net.minecraft.registry.Registries;
@@ -40,7 +41,7 @@ public class AotMusicClient implements ClientModInitializer {
             mc.getMusicTracker().stop();
         });
 
-        HudRenderCallback.EVENT.register((ctx, tickCounter) -> renderToast(ctx));
+        HudRenderCallback.EVENT.register((ctx, tickCounter) -> renderToast(ctx, tickCounter));
     }
 
     private static void startTrack(MinecraftClient mc, String id) {
@@ -63,11 +64,11 @@ public class AotMusicClient implements ClientModInitializer {
         toastUntil = -1;
     }
 
-    private static void renderToast(DrawContext ctx) {
+    private static void renderToast(DrawContext ctx, RenderTickCounter tickCounter) {
         if (toastUntil < 0 || clientTick >= toastUntil || toastTitle.isEmpty()) return;
         MinecraftClient mc = MinecraftClient.getInstance();
         TextRenderer font = mc.textRenderer;
-        float left = toastUntil - clientTick;
+        float left = toastUntil - clientTick - tickCounter.getTickDelta(true);
         int alpha = Math.max(0, Math.min(255, (int) (Math.min(1F, left / 10F) * 255)));
 
         String head = "♪ Сейчас играет";
