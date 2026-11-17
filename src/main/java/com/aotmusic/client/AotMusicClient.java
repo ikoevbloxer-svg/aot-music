@@ -15,12 +15,8 @@ import net.minecraft.client.sound.PositionedSoundInstance;
 import net.minecraft.registry.Registries;
 import net.minecraft.sound.SoundEvent;
 
-/**
- * Клиент: проигрывает трек, который прислал сервер, глушит ванильную музыку,
- * пока мод активен, и показывает название трека справа сверху на 5 секунд.
- */
+/** Клиент проигрывает синхронизированную сервером музыку и показывает её название. */
 public class AotMusicClient implements ClientModInitializer {
-    /** 5 секунд при 20 тиках в секунду. */
     private static final int TOAST_TICKS = 100;
 
     private static SoundInstance playing;
@@ -30,24 +26,21 @@ public class AotMusicClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        ClientPlayNetworking.registerGlobalReceiver(Net.PLAY, (client, handler, buf, sender) -> {
-            String id = buf.readString();
-            client.execute(() -> startTrack(client, id));
-        });
-        ClientPlayNetworking.registerGlobalReceiver(Net.STOP, (client, handler, buf, sender) ->
-                client.execute(() -> stopTrack(client)));
+        ClientPlayNetworking.registerGlobalReceiver(Net.PlayPayload.ID, (payload, context) ->
+                context.client().execute(() -> startTrack(context.client(), payload.trackId())));
+        ClientPlayNetworking.registerGlobalReceiver(Net.StopPayload.ID, (payload, context) ->
+                context.client().execute(() -> stopTrack(context.client())));
 
         ClientTickEvents.END_CLIENT_TICK.register(mc -> {
             clientTick++;
             if (mc.world == null) {
-                stopTrack(mc); // вышли из мира — выключаем свою музыку
+                stopTrack(mc);
                 return;
             }
-            // ванильная музыка молчит, пока играют саундтреки мода
             mc.getMusicTracker().stop();
         });
 
-        HudRenderCallback.EVENT.register(AotMusicClient::renderToast);
+        HudRenderCallback.EVENT.register((ctx, tickCounter) -> renderToast(ctx));
     }
 
     private static void startTrack(MinecraftClient mc, String id) {
@@ -70,11 +63,11 @@ public class AotMusicClient implements ClientModInitializer {
         toastUntil = -1;
     }
 
-    private static void renderToast(DrawContext ctx, float tickDelta) {
+    private static void renderToast(DrawContext ctx) {
         if (toastUntil < 0 || clientTick >= toastUntil || toastTitle.isEmpty()) return;
         MinecraftClient mc = MinecraftClient.getInstance();
         TextRenderer font = mc.textRenderer;
-        float left = toastUntil - clientTick - tickDelta;
+        float left = toastUntil - clientTick;
         int alpha = Math.max(0, Math.min(255, (int) (Math.min(1F, left / 10F) * 255)));
 
         String head = "♪ Сейчас играет";
